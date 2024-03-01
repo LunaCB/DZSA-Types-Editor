@@ -30,4 +30,4 @@ Chemlight_Yellow,30,15
 CableReel,80,55
 ```
 Just remove stuff from the sample CSV's you don't need, but do never remove the head-line :)
-- Right-click on "DZSA-Types-Editor.ps1" and choose "Run with PowerShell"
+- Right-click on "DZSA-Types-Editor.ps1" and choose "Run with PowerShell" or inspect and learn from it in a text editor / PowerShell-ISE
