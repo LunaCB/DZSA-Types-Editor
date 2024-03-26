@@ -22,6 +22,9 @@ $foodModifier        = $csvModifierData | Where-Object {$_.category -eq 'food'} 
 $toolsModifier       = $csvModifierData | Where-Object {$_.category -eq 'tools'} | Select-Object -ExpandProperty modifier
 $weaponsModifier     = $csvModifierData | Where-Object {$_.category -eq 'weapons'} | Select-Object -ExpandProperty modifier
 
+Write-Host "Creating backup of original XML..."
+Copy-Item -Path $xmlFilePath -Destination "$scriptPath\types_original.xml"
+
 #CLOTHES
 Write-Host "-------------------------------------------------------"
 Write-Host "Processing Min/Max Count for CLOTHES: $(($xml.types.type | Where-Object {$_.category.name -eq 'clothes'}).Count) Items with modifier $clothesModifier."
@@ -156,4 +159,21 @@ $csvData | ForEach-Object{
 }
 $xml.Save($xmlFilePath)
 Write-host ""
+$date = Get-Date -Format 'yyyy.MM.dd - HH:mm:ss'
+$header = @"
+<!--
+    Generated with DZSA-Types-Editor v1.1.0 (https://github.com/LunaCB/DZSA-Types-Editor)
+    XML Generated at: $date
+    Modifiers:
+        clothes: $clothesModifier
+        containers: $containerModifier
+        explosives: $explosivesModifier
+        food: $foodModifier
+        tools: $toolsModifier
+        weapons: $weaponsModifier
+-->
+"@
+$fileContent = Get-Content -Raw $xmlFilePath
+$header, $fileContent | Set-Content $xmlFilePath
+Write-Host "All done."
 Pause
