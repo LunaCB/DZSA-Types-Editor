@@ -173,7 +173,8 @@ $header = @"
         weapons: $weaponsModifier
 -->
 "@
-$fileContent = Get-Content -Raw $xmlFilePath
-$header, $fileContent | Set-Content $xmlFilePath
+$meta = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+$fileContent = (Get-Content -Raw $xmlFilePath).Replace($meta,"")
+$meta, $header, $fileContent | Set-Content $xmlFilePath
 Write-Host "All done."
 Pause
